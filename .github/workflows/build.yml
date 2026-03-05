@@ -42,4 +42,4 @@ jobs:
         with:
           name: LTC_Checker_Windows
           path: release/
-          retention-days: 30
+          retention-days: 90

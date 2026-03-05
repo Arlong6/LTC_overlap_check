@@ -35,11 +35,21 @@ jobs:
           copy dist\LTC_Checker.exe      release\LTC_Checker.exe
           copy dist\LTC_Checker_UI.exe   release\LTC_Checker_UI.exe
           copy 使用說明書.md              release\使用說明書.md
+          cd release
+          powershell Compress-Archive -Path * -DestinationPath ..\LTC_Checker_Windows.zip
         shell: cmd
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: LTC_Checker_Windows
-          path: release/
-          retention-days: 90
+      - name: Delete old latest release
+        run: gh release delete latest --yes --cleanup-tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true  # 第一次沒有 release 時不報錯
+
+      - name: Create latest release
+        run: |
+          gh release create latest LTC_Checker_Windows.zip `
+            --title "LTC 重疊檢查工具（最新版）" `
+            --notes "下載 LTC_Checker_Windows.zip，解壓縮後直接執行 LTC_Checker_UI.exe" `
+            --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

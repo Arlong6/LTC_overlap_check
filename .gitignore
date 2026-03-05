@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# PyInstaller
+build/
+dist/
+
+# Test data & output
+test_run/
+save/
+
+# Config (contains local paths)
+ltc_config.json
+
+# Actual data folders (keep structure, not files)
+csv/*.xlsx
+support/**/*.xlsx
+class/**/*.xlsx
+
+# Legacy
+*.exe
+*.zip
+*.spec.bak
+
+# macOS
+.DS_Store
